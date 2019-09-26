@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Youtuber Scanner</title>
+
+
+    <!-- Favicons -->
+    <link href="../static/img/favicon.png" rel="icon">
+    <link href="../static/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <link href="https://fonts.googleapis.com/css?family=Oswald:400,300,700|EB+Garamond" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../static/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/index_style.css">
+  </head>
+
+  <body>
+    <div class="content">
+      <div class="container">
+        <div class="row">
+          <div class="logo text-center">
+            <h1 class="search-caption">SEARCH A YOUTUBER</h1>
+          </div>
+
+          <div class="subcription-info text-center">
+            <form id="search-form" class="subscribe_form" action="/results" method="post">
+              <input required="" value="{{ orig_query }}" placeholder="Enter a keyword or sth ..." id="query" name="query" type="text">
+              <input value="{{ orig_channel_title }}" placeholder="Youtuber's name ..." id="channel_title" name="channel_title" type="text">
+              <input value="{{ orig_upload_interval }}" placeholder="Upload Frequency ..." id="upload_interval" name="upload_interval" type="number">
+
+              <select id="category" name="category" form="search-form">
+                  {% if category %}
+                  <option>Select A Category</option>
+                  {% else %}
+                  <option selected>Select A Category</option>
+                  {% endif %}
+
+                  {% if category == "Sport" %}
+                  <option value="Sport" selected>Sport</option>
+                  {% else %}
+                  <option value="Sport">Sport</option>
+                  {% endif %}
+
+                  {% if category == "Health" %}
+                  <option value="Health" selected>Health</option>
+                  {% else %}
+                  <option value="Health">Health</option>
+                  {% endif %}
+
+                  {% if category == "Game" %}
+                  <option value="Game" selected>Game</option>
+                  {% else %}
+                  <option value="Game">Game</option>
+                  {% endif %}
+
+                  {% if category == "Music" %}
+                  <option value="Music" selected>Music</option>
+                  {% else %}
+                  <option value="Music">Music</option>
+                  {% endif %}
+
+                  {% if category == "Fashion" %}
+                  <option value="Fashion" selected>Fashion</option>
+                  {% else %}
+                  <option value="Fashion">Fashion</option>
+                  {% endif %}
+
+                  {% if category == "Vehicle" %}
+                  <option value="Vehicle" selected>Vehicle</option>
+                  {% else %}
+                  <option value="Vehicle">Vehicle</option>
+                  {% endif %}
+
+                  {% if category == "Technology" %}
+                  <option value="Technology" selected>Technology</option>
+                  {% else %}
+                  <option value="Technology">Technology</option>
+                  {% endif %}
+
+                  {% if category == "Pet" %}
+                  <option value="Pet" selected>Pet</option>
+                  {% else %}
+                  <option value="Pet">Pet</option>
+                  {% endif %}
+
+                  {% if category == "Physical fitness" %}
+                  <option value="Physical fitness" selected>Physical fitness</option>
+                  {% else %}
+                  <option value="Physical fitness">Physical fitness</option>
+                  {% endif %}
+
+                  {% if category == "Food" %}
+                  <option value="Food" selected>Food</option>
+                  {% else %}
+                  <option value="Food">Food</option>
+                  {% endif %}
+
+                  {% if category == "Religion" %}
+                  <option value="Religion" selected>Religion</option>
+                  {% else %}
+                  <option value="Religion">Religion</option>
+                  {% endif %}
+
+                  {% if category == "Hobby" %}
+                  <option value="Hobby" selected>Hobby</option>
+                  {% else %}
+                  <option value="Hobby">Hobby</option>
+                  {% endif %}
+
+                  {% if category == "Politics" %}
+                  <option value="Politics" selected>Politics</option>
+                  {% else %}
+                  <option value="Politics">Politics</option>
+                  {% endif %}
+
+                  {% if category == "Military" %}
+                  <option value="Military" selected>Military</option>
+                  {% else %}
+                  <option value="Military">Military</option>
+                  {% endif %}
+
+                  {% if category == "Entertainment" %}
+                  <option value="Entertainment" selected>Entertainment</option>
+                  {% else %}
+                  <option value="Entertainment">Entertainment</option>
+                  {% endif %}
+
+                  {% if category == "Knowledge" %}
+                  <option value="Knowledge" selected>Knowledge</option>
+                  {% else %}
+                  <option value="Knowledge">Knowledge</option>
+                  {% endif %}
+
+                  {% if category == "Performing arts" %}
+                  <option value="Performing arts" selected>Performing arts</option>
+                  {% else %}
+                  <option value="Performing arts">Performing arts</option>
+                  {% endif %}
+
+                  {% if category == "Lifestyle (sociology)" %}
+                  <option value="Lifestyle (sociology)" selected>Lifestyle (sociology)</option>
+                  {% else %}
+                  <option value="Lifestyle (sociology)">Lifestyle (sociology)</option>
+                  {% endif %}
+                </select>
+
+              <input class="subscribe" name="search" value="SEARCH" type="submit">
+            </form>
+          </div>
+        </div>
+      </div>
+
+      {% if is_result == True: %}
+        <div id="results" class="result-info">
+            {% if ignored %}
+              <h2 class="subs-title">Ignoring stopword(s): 
+                {% for term in ignored %}
+                  <span class="data-in-row">{{ term }}</span>
+                {% endfor %}
+              </h2>
+            {% endif %}
+            {% if res_num == 0 %}
+              {% if unknown_query %}
+                <h2 class="subs-title">Cannot Find Word:
+                  <span class="data-in-row">{{ unknown_query }}</span>
+                </h2>
+              {% endif %}
+              {% if unknown_channel_title %}
+                <h2 class="subs-title">Cannot Find Youtuber:
+                  <span class="data-in-row">{{ unknown_channel_title }}</span>
+                </h2>
+              {% endif %}
+              {% if unknown_upload_interval %}
+                <h2 class="subs-title">Invalid Upload Interval:
+                  <span class="data-in-row">Cannot find youtubers uploading video every {{ unknown_upload_interval }} days.</span>
+                </h2>
+              {% endif %}
+            {% else %}
+              <h2 class="subs-title">Total hits: <span class="data-in-row">{{ res_num }}</span></h2>
+              <div class="list-group">
+                  {% for res in results %}
+                    <a href="/documents/{{ res }}" target="_blank" class="list-group-item">
+
+                      <img src="{{ results[res]['image_url'] }}" class="avartar">
+                        
+                      <h4 class="list-group-item-heading film-header">TITLE: <span class="data-in-row">{{ results[res]['channel_title'] }}</span></h4>
+
+                      <h4 class="list-group-item-heading film-header">SCORE:
+                        <span class="data-in-row">{{ results[res]['score'] }}</span>
+                      </h4>
+
+                      <h4 class="list-group-item-heading film-header">VIDEO COUNTS:
+                        <span class="data-in-row">{{ results[res]['video_count'] }}</span>
+                      </h4>
+
+                      <h4 class="list-group-item-heading film-header">VIEW COUNTS:
+                        <span class="data-in-row">{{ results[res]['view_count'] }}</span>
+                      </h4>
+
+                      <h4 class="list-group-item-heading film-header">SUBSCRIBER COUNTS:
+                        <span class="data-in-row">{{ results[res]['subscriber_count'] }}</span>
+                      </h4>
+
+                      <h4 class="list-group-item-heading film-header">CHANNEL CREATED DATE:
+                        <span class="data-in-row">{{ results[res]['channel_create_date'] }}</span>
+                      </h4>
+
+                      <h4 class="list-group-item-heading film-header">UPLOAD INTERVAL:
+                        <span class="data-in-row">Every {{ results[res]['upload_interval'] }} days</span>
+                      </h4>
+
+                      <h4 class="list-group-item-heading film-header">CATEGORIES:
+                        {% for category in results[res]['categories'] %}
+                          <span class="data-in-row">{{ category }}</span>
+                        {% endfor %}
+                      </h4>
+
+                      <h4 class="list-group-item-heading film-header">CHANNEL URL: 
+                        <span class="data-in-row">{{ results[res]['channel_url'] }}</span>
+                      </h4>
+
+                      <h4 class="list-group-item-heading film-header">DESCRIPTION:
+                        <p class="data-in-row" id="channel-description">{{ results[res]['channel_desc'] }}</span>
+                      </h4>
+                    
+                    </a>
+                  {% endfor %}
+              </div>
+            {% endif %}
+            
+            {% if res_num >= 10 %}
+            <nav aria-label="Page navigation">
+              <form action="/results" method="post" class="pagination">
+                <input type="hidden" name="query" value="{{ orig_query }}">
+                <input type="hidden" value="{{ orig_channel_title }}" name="channel_title">
+                <input type="hidden" value="{{ orig_upload_interval }}" name="upload_interval">
+                <input type="hidden" value="{{ category }}" name="category">
+                {% for i in range(1, pages_num + 1) %}
+                  <li>
+                    {% if page_id == i %}
+                      <input type="submit" class="btm-page-btn btn btn-info" name="page_id" value="{{ i }}">
+                    {% else %}
+                      <input type="submit" class="btm-page-btn btn btn-default" name="page_id" value="{{ i }}">
+                    {% endif %}
+                  </li>
+                {% endfor %}
+              </form>
+            </nav>
+            {% endif %}
+          {% endif %}
+        </div>
+    </div>
+
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/custom.js"></script>
+
+  </body>
+
+</html>

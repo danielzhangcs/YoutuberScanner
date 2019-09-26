@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>{{ channel.channel_title }}</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <!-- Favicons -->
+  <link href="../static/img/favicon.png" rel="icon">
+  <link href="../static/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Oswald:400,300,700|EB+Garamond" rel="stylesheet">
+
+  <!-- Bootstrap CSS File -->
+  <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Libraries CSS Files -->
+  <link href="../static/css/font-awesome.min.css" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="../static/css/detail_style.css" rel="stylesheet">
+
+</head>
+
+<body data-spy="scroll" data-offset="0" data-target="#theMenu">
+
+  <div id="headerwrap">
+    <div class="container">
+      <div class="row">
+
+        <h1>{{ channel.channel_title }}</h1>
+        <br>
+
+        <img id="avartar" src="{{ channel.image_url }}">
+
+        <br><br>
+        <h3>VIDEO COUNT:
+          <span class="data-in-row">{{ channel.video_count }}</span>
+        </h3>
+
+        <h3>VIEW COUNT:
+          <span class="data-in-row">{{ channel.view_count }}</span>
+        </h3>
+
+        <h3>SUBSCRIBER COUNT:
+          <span class="data-in-row">{{ channel.subscriber_count }}</span>
+        </h3>
+
+        <h3>CHANNEL CREATED DATE:
+          <span class="data-in-row">{{ channel.channel_create_date }}</span>
+        </h3>
+
+        <h3>UPLOAD INTERVAL:
+          <span class="data-in-row">Every {{ channel.upload_interval }} days</span>
+        </h3>
+
+        <h3>CATEGORIES:
+          {% for category in channel.categories %}
+          <span class="data-in-row">{{ category }}</span>
+          {% endfor %}
+        </h3>
+
+        <h3>CHANNEL URL:
+          <a class="data-in-row" target="_blank" href="{{ channel.channel_url }}">{{ channel.channel_url }}</a>
+        </h3>
+
+      </div>
+    </div>
+    <!-- /container -->
+  </div>
+  <!-- /headerwrap -->
+
+  <div id="f">
+    <div class="container">
+      <div class="row">
+
+        <h3>DESCRIPTION</h3>
+        <p class="centered">
+          <i class="icon icon-circle"></i>
+          <i class="icon icon-circle"></i>
+          <i class="icon icon-circle"></i>
+        </p>
+
+        <div class="col-lg-8 col-lg-offset-2">
+          <p class="movie-description">{{ channel.channel_desc }}</p>
+        </div>
+
+      </div>
+    </div>
+    <!-- /container -->
+  </div>
+  <!-- /f -->
+
+  <!-- JavaScript Libraries -->
+  <script src="../static/js/jquery.min.js"></script>
+  <script src="../static/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
